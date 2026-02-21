@@ -8,6 +8,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import Svg, { Path } from "react-native-svg";
+import { DimensionValue } from 'react-native';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
@@ -43,7 +44,7 @@ export default function WaveCircle({ percentage = 0 }) {
         {/* Animated Water Level Container */}
         <View
           className="absolute bottom-0 w-full bg-blue-500"
-          style={{ height: `${percentage}%` }}
+          style={{ height: `${percentage}%` as DimensionValue }}
         >
           {/* The Wave SVG Header */}
           <View style={{ position: "absolute", top: -35, width: "100%" }}>
