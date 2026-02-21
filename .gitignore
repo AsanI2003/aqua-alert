@@ -45,5 +45,3 @@ app-example
 # vscode
 .vscode/
 
-# NativeWind
-nativewind-env.d.ts
