@@ -1,33 +1,33 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import { Home, ClipboardList, BarChart3 } from 'lucide-react-native';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function TabsLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+    <Tabs screenOptions={{
+      tabBarActiveTintColor: '#2563eb', // Blue-600
+      tabBarInactiveTintColor: '#94a3b8', // Slate-400
+      tabBarStyle: { height: 70, paddingBottom: 10, paddingTop: 10 },
+      headerShown: false, // Hide top header for a cleaner look
+    }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => <Home size={24} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="today"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Today',
+          tabBarIcon: ({ color }) => <ClipboardList size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="stats"
+        options={{
+          title: 'Weekly',
+          tabBarIcon: ({ color }) => <BarChart3 size={24} color={color} />,
         }}
       />
     </Tabs>
