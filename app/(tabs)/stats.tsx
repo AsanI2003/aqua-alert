@@ -1,18 +1,22 @@
 import { Check } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
-import { DimensionValue, SafeAreaView, Text, View, ActivityIndicator } from "react-native";
+import { DimensionValue, SafeAreaView, Text, View, ActivityIndicator, Platform, StatusBar as RNStatusBar } from "react-native";
+import { useColorScheme } from 'nativewind';
+import { StatusBar } from 'expo-status-bar';
 import { auth, db } from '@/services/firebase';
 import { 
   collection, 
   query, 
   where, 
-  onSnapshot, // Real-time!
+  onSnapshot, 
   Timestamp, 
   limit, 
   getDocs 
 } from 'firebase/firestore';
 
 export default function StatsScreen() {
+  const { colorScheme } = useColorScheme();
+  const isDark = colorScheme === 'dark';
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<any[]>([]);
   const [weeklyAvg, setWeeklyAvg] = useState(0);
@@ -26,7 +30,6 @@ export default function StatsScreen() {
     const user = auth.currentUser;
     if (!user) return;
 
-    // 1. One-time check for history 
     const checkHistory = async () => {
       const historyQuery = query(collection(db, 'users', user.uid, 'logs'), limit(1));
       const historySnap = await getDocs(historyQuery);
@@ -34,7 +37,6 @@ export default function StatsScreen() {
     };
     checkHistory();
 
-    // 2. Setup Real-time Listener for the last 14 days
     const now = new Date();
     const fourteenDaysAgo = new Date();
     fourteenDaysAgo.setDate(now.getDate() - 13);
@@ -49,11 +51,9 @@ export default function StatsScreen() {
       const allLogs = snapshot.docs.map(doc => doc.data());
       setHasCurrentLogs(allLogs.length > 0);
 
-      // Process Daily Totals
       const dailyTotals: { [key: string]: number } = {};
       const todayKey = new Date().toDateString();
 
-      // Initialize all 14 days
       for (let i = 0; i < 14; i++) {
         const d = new Date();
         d.setDate(now.getDate() - i);
@@ -67,7 +67,6 @@ export default function StatsScreen() {
         }
       });
 
-      // Prepare Chart Data (Last 7 Days)
       let thisWeekSum = 0;
       const chartData = [];
       for (let i = 0; i < 7; i++) {
@@ -81,11 +80,10 @@ export default function StatsScreen() {
           day: d.toLocaleDateString('en-US', { weekday: 'narrow' }),
           h: `${perc}%` as DimensionValue,
           label: `${perc}%`,
-          isToday: d.toDateString() === todayKey // Check for highlight today
+          isToday: d.toDateString() === todayKey 
         });
       }
 
-      // Calculate Last Week
       let lastWeekSum = 0;
       for (let i = 7; i < 14; i++) {
         const d = new Date();
@@ -115,42 +113,45 @@ export default function StatsScreen() {
     if (comparison === null) return { text: "Pending", color: "text-blue-200" };
     
     const avgPerc = (weeklyAvg / GOAL) * 100;
-    if (avgPerc >= 75) return { text: "Excellent", color: "text-green-300" };
-    if (avgPerc >= 50) return { text: "Good", color: "text-blue-200" };
-    return { text: "Bad", color: "text-red-300" };
+    if (avgPerc >= 75) return { text: "Excellent", color: "text-green-400" };
+    if (avgPerc >= 50) return { text: "Good", color: "text-blue-300" };
+    return { text: "Bad", color: "text-red-400" };
   };
 
   const status = getStatus();
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-white">
+      <View className="flex-1 justify-center items-center bg-white dark:bg-slate-900">
         <ActivityIndicator size="large" color="#2563EB" />
       </View>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView 
+      className="flex-1 bg-white dark:bg-slate-900"
+      style={{ paddingTop: Platform.OS === 'android' ? RNStatusBar.currentHeight : 0 }}
+    >
+      <StatusBar style={isDark ? "light" : "dark"} />
       <View className="flex-1 p-6">
-        <Text className="text-3xl font-black text-blue-900 mb-4">Last 7 days</Text>
+        <Text className="text-3xl font-black text-blue-900 dark:text-white mb-4">Last 7 days</Text>
 
-        <View className="flex-1 bg-blue-50/50 p-6 rounded-[40px] border border-blue-100 flex-row items-end justify-between">
+        <View className="flex-1 bg-blue-50/50 dark:bg-slate-800/50 p-6 rounded-[40px] border border-blue-100 dark:border-slate-700 flex-row items-end justify-between">
           {stats.map((data, index) => (
             <View key={index} className="items-center justify-end h-full w-[12%]">
               <View
                 style={{ height: data.h }}
                 className={`w-full rounded-full mb-2 items-center justify-start pt-2 shadow-sm ${
-                  data.h === "100%" ? "bg-blue-500" : "bg-blue-200"
+                  data.h === "100%" ? "bg-blue-500" : "bg-blue-200 dark:bg-slate-600"
                 }`}
               >
-                {data.h === "100%" ? <Check color="white" size={16} strokeWidth={4} /> : 
-                <Text className="text-[10px] text-blue-900 font-bold">{data.label}</Text>}
+                {data.h === "100%" ? <Check color="white" size={14} strokeWidth={4} /> : 
+                <Text className="text-[10px] text-blue-900 dark:text-white font-bold">{data.label}</Text>}
               </View>
               
-              {/* Highlight today's date */}
               <View className={`${data.isToday ? 'bg-blue-600 w-6 h-6 rounded-full items-center justify-center' : ''}`}>
-                 <Text className={`${data.isToday ? 'text-white' : 'text-blue-900'} font-bold text-xs`}>
+                 <Text className={`${data.isToday ? 'text-white' : 'text-blue-900 dark:text-slate-400'} font-bold text-xs`}>
                     {data.day}
                  </Text>
               </View>

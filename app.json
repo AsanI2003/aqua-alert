@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Aqua Alert",
-    "slug": "Aqua Alert",
+    "slug": "Aqua-Alert",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -12,10 +12,16 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.asan2003.aquaalert",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/splash-icon.png"
       },
+      "permissions": [
+        "RECEIVE_BOOT_COMPLETED",
+        "SCHEDULE_EXACT_ALARM",
+        "NOTIFICATIONS"
+      ],
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
@@ -36,11 +42,25 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification-bell.png",
+          "color": "#2563EB"
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "09eabf7f-2562-4832-9550-f383e4bd872e"
+      }
+    },
+    "owner": "asan2003"
   }
 }

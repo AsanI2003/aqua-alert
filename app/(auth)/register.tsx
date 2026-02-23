@@ -27,7 +27,7 @@ export default function RegisterScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white p-8 justify-center">
+    <SafeAreaView className="flex-1 bg-white dark:bg-slate-900 p-8 justify-center">
       <Text className="text-4xl font-bold text-blue-900 mb-2">Join Us</Text>
       <Text className="text-gray-400 text-lg mb-10">Start your hydration journey</Text>
 

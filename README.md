@@ -1,50 +1,41 @@
-# Welcome to your Expo app 👋
+💧 Aqua Alert
+Stay Hydrated, Stay Healthy.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aqua Alert is a cross-platform mobile application designed to help users track their daily water intake and achieve their hydration goals through an intuitive interface and smart reminders.
 
-## Get started
 
-1. Install dependencies
+📲 Download & Install (Android)
+You can download the latest preview version of the app directly from the link below.
+https://expo.dev/accounts/asan2003/projects/Aqua-Alert/builds/00c2509e-4473-4341-b2c7-e8093882d5b0
 
-   ```bash
-   npm install
-   ```
+Note: Since this is a preview build, your phone may show a "blocked by Play Protect" warning. You can safely click "Install Anyway."
 
-2. Start the app
 
-   ```bash
-   npx expo start
-   ```
+✨ Features
+Persistent Auth: Secure login that remembers you even after closing the app.
+Daily Tracking: Log water intake with custom amounts.
+Progress Stats: View your weekly hydration trends.
+Smart Layout: Optimized navigation using Expo Router.
+System Sync: Automatic Dark/Light mode support via NativeWind.
 
-In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+🛠️ Tech Stack
+Framework: Expo (React Native)
+Navigation: Expo Router (v3)
+Database/Auth: Firebase (Firestore & Auth)
+Styling: NativeWind (Tailwind CSS)
+Icons: Lucide React Native
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+🚀 Development Setup
 
-When you're ready, run:
+Clone & Install:
+git clone https://github.com/your-username/aqua-alert-project.git
+cd aqua-alert-project
+npm install
 
-```bash
-npm run reset-project
-```
+Environment Variables:
+Create a .env file and add your EXPO_PUBLIC_FIREBASE_ keys.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Run Locally:
+npx expo start
