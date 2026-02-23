@@ -1,10 +1,12 @@
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ['babel-preset-expo'],
+    presets: [
+      ["babel-preset-expo", { jsxImportSource: "nativewind" }],
+      "nativewind/babel",
+    ],
     plugins: [
-      'nativewind/babel', // This must be in PLUGINS, not presets
-      'react-native-reanimated/plugin', // This must ALWAYS be last
+      "react-native-reanimated/plugin", // Keep this at the very bottom
     ],
   };
 };
