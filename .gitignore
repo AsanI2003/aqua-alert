@@ -45,3 +45,6 @@ app-example
 # vscode
 .vscode/
 
+# environment files
+.env
+

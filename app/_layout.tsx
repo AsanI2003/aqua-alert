@@ -1,45 +1,53 @@
-import { useEffect, useState } from 'react';
-import { Stack } from 'expo-router';
+import { useEffect } from 'react';
+import { Stack, useRouter, useSegments } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { View } from 'react-native';
+import { AuthProvider, useAuth } from '../context/AuthContext'; 
 import "../global.css";
 
-// This prevents the splash screen from hiding automatically 
+// Prevent auto-hide so we can control it with Firebase
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
-  const [appIsReady, setAppIsReady] = useState(false);
+function RootLayoutNav() {
+  const { user, loading } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
 
-  useEffect(() => {
-    async function prepare() {
-      try {
-        // Simulate a 2-second delay to show off your splash UI 
-        // In the future, this is where we check Firebase Auth [cite: 19]
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        setAppIsReady(true); 
-      }
-    }
+useEffect(() => {
+  if (loading) return;
 
-    prepare();
-  }, []);
+  // 1. Get the top-level segment
+  const rootSegment = segments[0] as string;
 
-  // Once the app is ready, we hide the splash screen 
-  useEffect(() => {
-    if (appIsReady) {
-      SplashScreen.hideAsync();
-    }
-  }, [appIsReady]);
+  // 2. Determine where the user is
+  const isAuthGroup = rootSegment === '(auth)';
+  const isIndex = rootSegment === 'index' || !rootSegment;
 
-  if (!appIsReady) {
-    return null; // Keep showing splash screen
+  // 3. Logic:
+  if (!user && !isAuthGroup) {
+    // Force to login if not authenticated and not in auth screens
+    router.replace('/login');
+  } 
+  else if (user && (isAuthGroup || isIndex)) {
+    // Force to home if authenticated but trying to see login/register
+    router.replace('/(tabs)/home');
   }
+
+  SplashScreen.hideAsync();
+}, [user, loading, segments]);
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
+     
+      <Stack.Screen name="(auth)" /> 
+      <Stack.Screen name="(tabs)" />
     </Stack>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <AuthProvider>
+      <RootLayoutNav />
+    </AuthProvider>
   );
 }

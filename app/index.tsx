@@ -1,16 +1,10 @@
-import { Redirect } from 'expo-router';
-import { useState } from 'react';
+import { View, ActivityIndicator } from 'react-native';
 
 export default function Index() {
-  // For now, we manually set this. 
-  // Later, Firebase will tell us if this is true or false.
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  if (!isLoggedIn) {
-    // If not logged in, send them straight to the Login screen
-    return <Redirect href="/login" />;
-  }
-
-  // If logged in, send them to the Home Dashboard
-  return <Redirect href="./(tabs)/home" />;
+  // We show a loader just in case there's a split-second gap
+  return (
+    <View className="flex-1 justify-center items-center bg-white">
+      <ActivityIndicator size="large" color="#2563EB" />
+    </View>
+  );
 }

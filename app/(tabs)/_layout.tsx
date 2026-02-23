@@ -4,10 +4,10 @@ import { Home, ClipboardList, BarChart3 } from 'lucide-react-native';
 export default function TabsLayout() {
   return (
     <Tabs screenOptions={{
-      tabBarActiveTintColor: '#2563eb', // Blue-600
-      tabBarInactiveTintColor: '#94a3b8', // Slate-400
+      tabBarActiveTintColor: '#2563eb', 
+      tabBarInactiveTintColor: '#94a3b8', 
       tabBarStyle: { height: 70, paddingBottom: 10, paddingTop: 10 },
-      headerShown: false, // Hide top header for a cleaner look
+      headerShown: false, // Hide top header 
     }}>
       <Tabs.Screen
         name="home"
