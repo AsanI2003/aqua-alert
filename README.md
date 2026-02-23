@@ -1,6 +1,5 @@
 💧 Aqua Alert
 Stay Hydrated, Stay Healthy.
-
 Aqua Alert is a cross-platform mobile application designed to help users track their daily water intake and achieve their hydration goals through an intuitive interface and smart reminders.
 
 
@@ -30,8 +29,8 @@ Icons: Lucide React Native
 🚀 Development Setup
 
 Clone & Install:
-git clone https://github.com/your-username/aqua-alert-project.git
-cd aqua-alert-project
+git clone https://github.com/your-username/aqua-alert-project.git <br>
+cd aqua-alert-project <br>
 npm install
 
 Environment Variables:
